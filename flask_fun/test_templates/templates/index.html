@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="Test Templates" name="Index">
+    <title>My First Template</title>
+  </head>
+  <body>
+    <h3>My first flask template with embedded python</h3>
+    <p>Phrase: {{ phrase }}</p>
+    <p>Times: {{ times }}</p>
+    {% for x in range(0,times) %}
+    <p>{{ phrase }}</p>
+    {% endfor %}
+  </body>
+</html>
+
+
+<!--
+{{ some variable }} evaluate and output whatever you put inside of them
+{% some expression %} is used for for loops, if statements, etc
+-->

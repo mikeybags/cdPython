@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dojos Form</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css')}}">
+    <script type="text/javascript" src=" {{ url_for('static', filename='js/script.js') }}"></script>
+  </head>
+  <body>
+    <h3>Want Dojo information? Enter your contact information in the form below!</h3>
+    <form class="input" action="#" method="post">
+      <input type="text" name="first_name" placeholder="First Name">
+      <input type="text" name="email" placeholder="E-Mail Address">
+      <input type="text" name="phone" placeholder="Phone Number"></br></br>
+      <button type="button">Submit</button>
+    </form>
+  </body>
+</html>
