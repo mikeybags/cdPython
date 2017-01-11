@@ -13,4 +13,4 @@ def ninja_info():
 def dojo_form():
     return render_template('dojos.html')
 
-app.run(debug="True")
+app.run(debug=True)

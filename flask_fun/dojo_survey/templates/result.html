@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="survey using forms, flask, and python" name="Dojo Survey">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Dojo Survey Index</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="form_area">
+        <h2>Submitted Info</h2>
+        <label>Name:</label> {{ name }}
+        <label>Dojo Location:</label> {{ location }}
+        <label>Favorite Language:</label> {{ language }}
+        <label>Comment:</label> {{ comment }}
+      </div><!-- end form area -->
+    </div><!-- end wrapper -->

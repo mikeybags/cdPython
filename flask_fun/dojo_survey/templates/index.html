@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="survey using forms, flask, and python" name="Dojo Survey">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Dojo Survey Index</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="form_area">
+        <form action="/result" method="post">
+          <label>
+            Your Name:
+          </label>
+          <input type="text" name="name"></br>
+          <label>
+            Dojo Location:
+          </label>
+          <select required name="location">
+            <option value="" disabled selected hidden>Select a Location</option>
+            <option value="Chicago">Chicago</option>
+            <option value="Dallas">Dallas</option>
+            <option value="San Francisco">San Francisco</option>
+            <option value="Seattle">Seattle</option>
+          </select></br>
+          <label>
+            Favorite Language
+          </label>
+          <select required name="language">
+            <option value="" disabled selected hidden>Select a Language</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="Python">Python</option>
+            <option value="Ruby">Ruby</option>
+          </select></br>
+          <label>
+            Comment (optional):
+          </label></br>
+          <textarea rows="5" name="comment"></textarea></br>
+          <button type="submit">Submit</button>
+        </form>
+      </div><!-- end form area -->
+    </div><!-- end wrapper -->
+  </body>
+</html>
