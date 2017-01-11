@@ -5,6 +5,7 @@
     <meta content="survey using forms, flask, and python" name="Dojo Survey">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     <title>Dojo Survey Index</title>
+    <link rel="stylesheet" href="/css/master.css">
   </head>
   <body>
     <div id="wrapper">
@@ -19,19 +20,18 @@
           </label>
           <select required name="location">
             <option value="" disabled selected hidden>Select a Location</option>
-            <option value="Chicago">Chicago</option>
-            <option value="Dallas">Dallas</option>
-            <option value="San Francisco">San Francisco</option>
-            <option value="Seattle">Seattle</option>
+            {% for location in ['Chicago', 'Dallas', 'San Francisco', 'Seattle']  %}
+            <option value=location>{{ location }}</option>
+            {% endfor %}
           </select></br>
           <label>
             Favorite Language
           </label>
           <select required name="language">
             <option value="" disabled selected hidden>Select a Language</option>
-            <option value="JavaScript">JavaScript</option>
-            <option value="Python">Python</option>
-            <option value="Ruby">Ruby</option>
+            {% for language in ['JavaScript', 'Python', 'Ruby'] %}
+            <option value=language>{{ language }}</option>
+            {% endfor %}
           </select></br>
           <label>
             Comment (optional):
