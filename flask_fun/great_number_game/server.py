@@ -26,7 +26,6 @@ def guess():
 
 @app.route('/new')
 def new():
-    session.pop('guess')
     session.pop('number')
     session.pop('result')
     return redirect('/')
