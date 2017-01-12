@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css')}}">
+    <title>The Great Number Game</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron vertical-center center-block">
+        <h2 class="page-header text-center ">Welcome to the Great Number Game!</h2>
+        <h3 class="text-center">I am thinking of a number between 1 and 100</h3>
+        <h3 class="text-center">Take a guess!</h3>
+        {% if session['result'] == 'error' %}
+        <div class="alert alert-danger text-center" role="alert">
+          <h4>Please enter a number.</h4>
+        </div>
+        {% endif %}
+        {% if session['result'] == 'tooHigh' %}
+          <div class="alert alert-danger text-center">
+            <h2>Too High!</h2>
+          </div>
+        {% endif %}
+        {% if session['result'] == 'tooLow' %}
+          <div class="alert alert-danger text-center">
+            <h2>Too Low!</h2>
+          </div>
+        {% endif %}
+        {% if session['result'] == 'correct' %}
+          <div class="alert alert-success text-center" role="alert">
+            <h2>{{session['number']}} was the number!</h2>
+            <a href="{{url_for('new')}}"><button class="btn btn-primary">Play Again?</button></a>
+          </div>
+        {% endif %}
+        {% if session['result'] != 'correct' %}
+          <form class="text-center container" action="/guess" method="POST">
+            <input type="text" name="guess" placeholder={{guess}}>
+            <input class="btn btn-primary" type="submit" value="Submit">
+          </form>
+        {% endif %}
+      </div> <!-- end jumbotron -->
+    </div><!-- end container -->
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Counter</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="counter">
+        <h2>Counter</h2>
+        <p>This page has been visited {{ counter }} time(s).</p>
+        <a href="{{ url_for('plus_two') }}"><button>Add 2 to Counter</button></a>
+        <a href="{{ url_for('reset') }}"><button>Reset Counter to 1</button></a>
+      </div> <!-- end counter -->
+    </div> <!-- end wrapper -->
+  </body>
+</html>
