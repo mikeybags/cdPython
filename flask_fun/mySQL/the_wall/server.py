@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, flash, request
+from flask import Flask, render_template, redirect, session, flash, request, Markup
 from mysqlconnection import MySQLConnector
 from flask.ext.bcrypt import Bcrypt
 
@@ -108,7 +108,8 @@ def new_message():
 @app.route('/new_comment/<message_id>', methods=['POST'])
 def new_comment(message_id):
     query = "INSERT INTO comments (comment, created_at, updated_at, user_id, message_id) VALUES (:comment, NOW(), NOW(), :user_id, :msg_id)"
-    data = {'comment': request.form['comment'],
+    comment = Markup(request.form['comment'])
+    data = {'comment': comment,
             'user_id': session['user_id'],
             'msg_id': message_id}
     mysql.query_db(query, data)
