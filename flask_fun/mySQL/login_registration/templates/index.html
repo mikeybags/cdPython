@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css')}}">
+    <title>Login and Registration</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="well">
+        <h2>Please Register or Log In</h2>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <form class="form-horizontal" action='/register' method="POST">
+          <fieldset>
+            <div id="legend">
+              <legend class="">Register</legend>
+            </div>
+            <div class="control-group">
+              <label class="control-label"  for="first_name">First Name: </label>
+              <div class="controls">
+                <input type="text" name="first_name" value="{{session['first_name']}}" class="input-xlarge">
+                {% with errors = get_flashed_messages(category_filter=["first_name_error"])%}
+                  {% if errors %}
+                    {% for msg in errors %}
+                        <p class="text-danger">{{msg}}</p>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label"  for="last_name">Last Name: </label>
+              <div class="controls">
+                <input type="text" name="last_name" value="{{session['last_name']}}" class="input-xlarge">
+                {% with errors = get_flashed_messages(category_filter=["last_name_error"])%}
+                  {% if errors %}
+                    {% for msg in errors %}
+                      <div class="alert-message block-message error">
+                        <p class="text-danger">{{msg}}</p>
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+              </div>
+            </div>
+            <div class="control-group">
+              <!-- E-mail -->
+              <label class="control-label" for="email">E-mail:</label>
+              <div class="controls">
+                <input type="text" name="email" value="{{session['email']}}" class="input-xlarge">
+                {% with errors = get_flashed_messages(category_filter=["email_error"])%}
+                  {% if errors %}
+                    {% for msg in errors %}
+                      <div class="alert-message block-message error">
+                        <p class="text-danger">{{msg}}</p>
+                      </div>
+                    {% endfor %}
+                  {% else %}
+                    <p class="help-block">Please provide your E-mail Address</p>
+                  {% endif %}
+                {% endwith %}
+
+              </div>
+            </div>
+            <div class="control-group">
+              <!-- Password-->
+              <label class="control-label" for="password">Password:</label>
+              <div class="controls">
+                <input type="password" name="password" placeholder="" class="input-xlarge">
+                {% with errors = get_flashed_messages(category_filter=["pw_error"])%}
+                  {% if errors %}
+                    {% for msg in errors %}
+                      <div class="alert-message block-message error">
+                        <p class="text-danger">{{msg}}</p>
+                      </div>
+                    {% endfor %}
+                  {% else %}
+                    <p class="help-block">Password should be at least 8 characters</p>
+                    {% endif %}
+                {% endwith %}
+              </div>
+            </div>
+            <div class="control-group">
+              <!-- Password -->
+              <label class="control-label"  for="password_confirm">Confirm Password:</label>
+              <div class="controls">
+                <input type="password" name="password_confirm" placeholder="" class="input-xlarge">
+                {% with errors = get_flashed_messages(category_filter=["confirm_pw_error"])%}
+                  {% if errors %}
+                    {% for msg in errors %}
+                    <div class="alert-message block-message error">
+                      <p class="text-danger">{{msg}}</p>
+                    </div>
+                    {% endfor %}
+                  {% else %}
+                    <p class="help-block">Please confirm password</p>
+                  {% endif %}
+                {% endwith %}
+              </div>
+            </div>
+            <div class="control-group">
+              <!-- Button -->
+              <div class="controls">
+                <button class="btn btn-success">Register</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div id="legend">
+          <legend class="">Login</legend>
+        </div>
+        <form class="form-horizontal" action="/login" method="post">
+          <fieldset>
+            <div class="control-group">
+              <label for="email" class="control-label">E-Mail:</label>
+              <div class="controls">
+                <input type="text" name="email" class="input-xlarge">
+                {% with errors = get_flashed_messages(category_filter=["no_user"])%}
+                  {% if errors %}
+                    {% for msg in errors %}
+                        <p class="text-danger">{{msg}}</p>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="password" class="control-label">Password:</label>
+              <div class="controls">
+                <input type="password" name="password" class="input-xlarge">
+                <p class="help-block"></p>
+                  {% with errors = get_flashed_messages(category_filter=["wrong_pw"])%}
+                    {% if errors %}
+                      {% for msg in errors %}
+                          <p class="text-danger">{{msg}}</p>
+                      {% endfor %}
+                    {% endif %}
+                  {% endwith %}
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="controls">
+                <button class="btn btn-success">Login</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
