@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, session, flash, request, Markup
 from mysqlconnection import MySQLConnector
 from flask.ext.bcrypt import Bcrypt
+from datetime import datetime, date, time
 
 app = Flask(__name__)
 mysql = MySQLConnector(app, 'walldb')
@@ -93,7 +94,6 @@ def wall():
     messages = mysql.query_db(message_query)
     comment_query = "SELECT first_name, last_name, comment, comments.created_at, message_id, comments.user_id, comments.id FROM comments JOIN users ON comments.user_id = users.id ORDER BY comments.created_at ASC"
     comments = mysql.query_db(comment_query)
-    print "comment", comments, "session user id is", session['user_id']
     return render_template('wall.html', all_messages=messages, message_comments=comments)
 
 @app.route('/new_message', methods=['POST'])
