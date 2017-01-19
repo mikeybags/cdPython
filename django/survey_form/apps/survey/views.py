@@ -4,7 +4,9 @@ from django.contrib import messages
 
 # Create your views here.
 def index(request):
-    return render(request, 'survey/index.html')
+    form_choices = { 'location': ['Chicago', 'Dallas', 'San Francisco', 'Seattle'],
+                     'language': ['JavaScript', 'Python', 'Ruby'] }
+    return render(request, 'survey/index.html' , form_choices)
 
 def process(request):
     if request.method == "POST":

@@ -17,17 +17,16 @@
           <label for="location">Dojo Location:</label>
           <select required name="location">
             <option value="" disabled selected hidden>Select a Location</option>
-            <option value="Chicago">Chicago</option>
-            <option value="Dallas">Dallas</option>
-            <option value="San Francisco">San Francisco</option>
-            <option value="Seattle">Seattle</option>
+            {% for city in location %}
+              <option value="{{ city }}">{{ city }}</option>
+            {% endfor %}
           </select>
           <label for="language">Favorite Language:</label>
           <select required name="language">
             <option value="" disabled selected hidden>Select a Language</option>
-            <option value="Javascript">JavaScript</option>}
-            <option value="Python">Python</option>}
-            <option value="Ruby">Ruby</option>}
+            {% for language in language %}
+              <option value="{{ language }}">{{ language }}</option>
+            {% endfor %}
           </select>
           <label for="comments">Comments (optional)</label>
           <textarea rows="10" cols="" name="comments" id="">{{ request.session.comments }}</textarea>
