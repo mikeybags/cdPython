@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+  <link rel="stylesheet" type= "text/css" href="{% static 'timedisplay/bootstrap.min.css' %}">
+  <title>Current Time</title>
+</head>
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>It is {{ time|date:"N j, o" }}</h1>
+      <h1> {{ time|time:"P"}}</h1>
+    </div>
+  </div>
+</body>
+</html>

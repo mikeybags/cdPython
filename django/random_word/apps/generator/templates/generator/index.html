@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'generator/bootstrap.min.css' %}">
+    <title>Random "Word" Generator</title>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        &nbsp;
+      </div>
+      <div>
+        &nbsp;
+      </div>
+      <div>
+        &nbsp;
+      </div>
+      <div class="h5">
+        Random Word (attempt # {{request.session.counter}})
+      </div>
+      <div class="well text-center h3">
+        {{ request.session.random_word }}
+      </div>
+      <form action="/randomize" method="post">
+        {% csrf_token %}
+        <input class="btn btn-success center-block box-shadow" type="submit" name="" value="Create Random Word">
+      </form>
+    </div>
+  </body>
+</html>
