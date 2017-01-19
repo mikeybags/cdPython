@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dojo Survey Form</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'survey/styles.css'%}">
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="form_area">
+        <form action="/surveys/process" method="post">
+          {% csrf_token %}
+          <label for="name">Your Name:</label>
+          <input type="text" name="name" value="{{ request.session.name }}">
+          <br>
+          <label for="location">Dojo Location:</label>
+          <select required name="location">
+            <option value="" disabled selected hidden>Select a Location</option>
+            <option value="Chicago">Chicago</option>
+            <option value="Dallas">Dallas</option>
+            <option value="San Francisco">San Francisco</option>
+            <option value="Seattle">Seattle</option>
+          </select>
+          <label for="language">Favorite Language:</label>
+          <select required name="language">
+            <option value="" disabled selected hidden>Select a Language</option>
+            <option value="Javascript">JavaScript</option>}
+            <option value="Python">Python</option>}
+            <option value="Ruby">Ruby</option>}
+          </select>
+          <label for="comments">Comments (optional)</label>
+          <textarea rows="10" cols="" name="comments" id="">{{ request.session.comments }}</textarea>
+          <input type="submit">
+          {% if messages %}
+            <ul class="messages">
+              {% for msg in messages %}
+                <li>
+                  <div class="alert alert-{{msg.level_tag}}" role="alert">
+ 	                  {{msg.message}}
+                	</div>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

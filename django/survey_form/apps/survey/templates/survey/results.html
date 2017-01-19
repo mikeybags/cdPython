@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="survey using forms, flask, and python" name="Dojo Survey">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'survey/styles.css'%}">
+    <title>Dojo Survey Index</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="form_area">
+        <div id="success">
+          <p>Thanks for submitting this form! You have submitted this form {{ request.session.counter }} times now!
+        <h2>Submitted Info</h2>
+        <label>Name:</label> {{ request.session.name }}
+        <label>Dojo Location:</label> {{ request.session.location }}
+        <label>Favorite Language:</label> {{ request.session.language }}
+        <label>Comment:</label> {{ request.session.comments }}
+      </div><!-- end form area -->
+    </div><!-- end wrapper -->
