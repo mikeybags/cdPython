@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ninja Gold</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'find_gold/css/bootstrap.min.css'%}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="well well-sm">
+        <p class="d-inline-block">Your Gold:  <span class="glyphicon glyphicon-usd" aria-hidden="true"></span><span class="panel panel-body">{{ request.session.gold }}</span></p>
+
+      </div>
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="jumbotron-sm col xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center panel panel-default">
+          <h4>Farm</h4>
+          <p>Earns 10-20 gold</p>
+          <form action="/process_money/farm" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary" value="Earn Gold!">
+          </form>
+          <p>&nbsp;</p>
+        </div>
+        <div class="jumbotron-sm col xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center panel panel-default">
+          <h4>Cave</h4>
+          <p>Find 5-10 gold</p>
+          <form action="/process_money/cave" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary" value="Find Gold!">
+          </form>
+          <p>&nbsp;</p>
+        </div>
+        <div class="jumbotron-sm col xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center panel panel-default">
+          <h4>House</h4>
+          <p>Find 2-5 gold</p>
+          <form action="/process_money/house" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary" value="Find Gold!">
+          </form>
+          <p>&nbsp;</p>
+        </div>
+        <div class="jumbotron-sm col xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center panel panel-default">
+          <h4>Casino </h4>
+          <p>Earns/takes 0-50 gold</p>
+          <form action="/process_money/casino" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-warning" value="Risk Gold!">
+          </form>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+      <p>Activities:</p>
+      <div id="activities" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bigarea panel hideOverFlow">
+        {% for entry in request.session.activity_log %}
+          {% if 'Won' in entry %}
+            <p class="green">{{ entry }}</p>
+          {% elif 'Earned' in entry %}
+            <p class="green">{{ entry }}</p>
+          {% elif 'Found' in entry %}
+            <p class="green">{{ entry }}</p>
+          {% elif 'Lost' in entry %}
+            <p class="red">{{ entry }}</p>
+          {% else %}
+            <p>{{ entry }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <script>
+      var objDiv = document.getElementById("activities");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    </script>
+  </body>
+</html>

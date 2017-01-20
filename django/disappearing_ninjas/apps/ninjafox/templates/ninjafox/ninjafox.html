@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'ninjafox/css/bootstrap.min.css' %}">
+    <title>Ninja...or Megan?</title>
+  </head>
+  <body>
+    {% if color == "blue" %}
+      <img class='center-block' src="{% static 'ninjafox/images/leonardo.jpg' %}" alt="Ninja Turtle Leonardo">
+      <div class="well text-center">
+        <p>You found Leonardo!</p>
+        <p>Can you find the other ninjas?</p>
+      </div>
+    {% elif color == "red" %}
+      <img class='center-block' src="{% static 'ninjafox/images/raphael.jpg' %}" alt="Ninja Turtle Raphael">
+      <div class="well text-center">
+        <p>You found Raphael!</p>
+        <p>Can you find the other ninjas?</p>
+      </div>
+    {% elif color == "orange"%}
+      <img class='center-block' src="{% static 'ninjafox/images/michelangelo.jpg' %}" alt="Ninja Turtle Michaelangelo">
+      <div class="well text-center">
+        <p>You found Michaelangelo!</p>
+        <p>Can you find the other ninjas?</p>
+      </div>
+    {% elif color == "purple" %}
+      <img class='center-block' src="{% static 'ninjafox/images/donatello.jpg' %}" alt="Ninja Turcle Donatello">
+      <div class="well text-center">
+        <p>You found Donatello!</p>
+        <p>Can you find the other ninjas?</p>
+      </div>
+    {% else %}
+      <img class='center-block' src="{% static 'ninjafox/images/notapril.jpg'%}" alt="Megan Fox">
+      <div class="well text-center">
+        <p>You found April...I think. Was she April? Eh who cares, it's Megan Fox.</p>
+        <p>Do you want to find the ninjas? (they're not as good looking...)</p>
+      </div>
+    {% endif %}
+  </body>
+</html>
