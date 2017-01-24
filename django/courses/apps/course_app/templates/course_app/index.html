@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'course_app/bootstrap.min.css'%}">
+    <title>Courses</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Add a new course</h2>
+      <form action="/add" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="name" class="control-label">Name:</label>
+          <input type="text" name="name" class="form-control">
+          <label for="description" class="control-label">Description:</label>
+          <textarea name="description" rows="4" class="form-control"></textarea>
+          <div>&nbsp</div>
+          <input type="submit" class="btn btn-primary">
+        </div>
+      </form>
+      <div>&nbsp</div>
+      <div>&nbsp</div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Courses</div>
+          <table class="table table-striped">
+            <thead>
+              <th>Course Name</th>
+              <th>Description</th>
+              <th>Date Added</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              {% if courses %}
+                {% for course in courses %}
+                  <tr>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.description.description }}</td>
+                    <td>{{ course.created_at }}</td>
+                    <td><a href="courses/destroy/{{ course.id }}">Remove</a></td>
+                    <td>
+                      <form action="/courses/{{ course.id }}" method="post">
+                        {% csrf_token %}
+                        <input class="btn btn-xs btn-primary" type="submit" value="Leave Comment">
+                      </form>
+                  </tr>
+                {% endfor %}
+              {% endif %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

@@ -19,12 +19,12 @@ def process_money(request, choice):
     if choice == "cave":
         earnings = random.randrange(5,11)
         request.session['gold'] += earnings
-        activity_log = "You have earned " + str(earnings) + " gold from the farm! " + timestamp
+        activity_log = "You have earned " + str(earnings) + " gold from the cave! " + timestamp
         request.session['activity_log'].append(activity_log)
     if choice == "house":
         earnings = random.randrange(2,6)
         request.session['gold'] += earnings
-        activity_log = "You have earned " + str(earnings) + " gold from the farm! " + timestamp
+        activity_log = "You have earned " + str(earnings) + " gold from the house! " + timestamp
         request.session['activity_log'].append(activity_log)
     if choice == "casino":
         if request.session['gold'] < 10:

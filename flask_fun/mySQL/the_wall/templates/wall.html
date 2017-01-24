@@ -7,9 +7,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css')}}">
     <title>The Wall</title>
   </head>
-  <body>
+  <body class="gradient">
     <div class="container col-xl-10 col-xl-offset-1 col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
-      <div class="well container-fluid">
+      <div id="nav-gradient" class="well container-fluid">
         <h3 class="visible-lg-inline visible-md-inline visible-sm-inline visible-xs-inline">CodingDojo Wall</h3>
         <span class="navbar-right">Hello, {{session['first_name']}}<span>&nbsp; &nbsp;</span>
         <a href="/logout" class="navbar-link">Log out</a></span>
@@ -24,6 +24,20 @@
           </form>
         </div>
       </div>
+      {% with errors = get_flashed_messages(category_filter=["old_message"])%}
+        {% if errors %}
+          {% for error in errors %}
+            <p class="text-danger text-center">{{error}}</p>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      {% with errors = get_flashed_messages(category_filter=["old_comment"])%}
+        {% if errors %}
+          {% for error in errors %}
+            <p class="text-danger text-center">{{error}}</p>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
       {% for messages in all_messages %}
         <div id="messages_comments" class="panel panel-primary row col-xl-10 col-xl-offset-1 col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
           <p class="media-object h5">{{messages['first_name']}} {{messages['last_name']}} - {{messages.created_at.strftime('%B %dth %Y, %I:%M%p:')}}</p>

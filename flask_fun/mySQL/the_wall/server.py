@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, session, flash, request, Markup
 from mysqlconnection import MySQLConnector
 from flask.ext.bcrypt import Bcrypt
-from datetime import datetime, date, time
+from datetime import datetime, timedelta, date
 
 app = Flask(__name__)
 mysql = MySQLConnector(app, 'walldb')
@@ -117,17 +117,33 @@ def new_comment(message_id):
 
 @app.route('/messages/<message_id>/delete', methods=['POST'])
 def delete_message(message_id):
-    query = "DELETE FROM messages WHERE id = :specific_id"
-    data = {'specific_id': message_id}
-    mysql.query_db(query, data)
-    return redirect('/wall')
+    query = "SELECT NOW()-created_at AS DIFF FROM messages WHERE id=:message_id"
+    data = {
+        "message_id": message_id
+    }
+    time = mysql.query_db(query, data)
+    if time[0]["DIFF"] > 1800:
+        flash("Cannot delete messages more than 30 minutes old!", "old_message")
+        return redirect('/wall')
+    else:
+        query = "DELETE FROM messages WHERE id=:message_id"
+        mysql.query_db(query, data)
+        return redirect('/wall')
 
 @app.route('/comments/<comment_id>/delete', methods=['POST'])
 def delete_comment(comment_id):
-    query = "DELETE FROM comments WHERE id = :specific_id"
-    data = {'specific_id': comment_id}
-    mysql.query_db(query, data)
-    return redirect('/wall')
+    query = "SELECT NOW()-created_at AS DIFF FROM comments WHERE id=:comment_id"
+    data = {
+        "comment_id": comment_id
+    }
+    time = mysql.query_db(query, data)
+    if time[0]["DIFF"] > 1800:
+        flash("Cannot delete comments more than 30 minutes old!", "old_comment")
+        return redirect('/wall')
+    else:
+        query = "DELETE FROM comments WHERE id=:comment_id"
+        mysql.query_db(query, data)
+        return redirect('/wall')
 
 
 @app.route('/logout')

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'course_app/bootstrap.min.css'%}">
+    <title>Courses</title>
+  </head>
+  <body>
+    <div class="container">
+      <div>&nbsp;</div>
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          <h2>Are you sure you want to delete the following course?</h2>
+        </div>
+        <div class="panel panel-body">
+          <label class="control-label">Name:</label>
+          <p>{{ course.name }}</p>
+        </div>
+        <div class="panel-body">
+          <label class="control-label">Description:</label>
+          <p>{{ course.description.description }}</p>
+        </div>
+      </div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+        <div class="btn-group">
+          <form class="btn-group center-block" action="/" method="get">
+            {% csrf_token %}
+            <input class="btn btn-default btn-lg" type="submit"value="No">
+          </form>
+          <div class="btn-group">&nbsp; &nbsp; &nbsp;</div>
+          <form class="btn-group center-block" action="/delete/{{ course.id }}" method="post">
+            {% csrf_token %}
+            <input class="btn btn-danger btn-lg" type="submit" value="Yes! I want to delete this">
+          </form>
+        </div>
+      </div>
+  </body>
+</html>

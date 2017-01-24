@@ -15,6 +15,7 @@ def process(request):
         request.session['location'] = request.POST['location']
         request.session['language'] = request.POST['language']
         request.session['comments'] = request.POST['comments']
+        print request.session
         if len(request.session['name']) < 2:
             is_valid = False
             messages.warning(request, 'Name must be at least 2 characters.')
