@@ -23,20 +23,20 @@
             <div class="control-group">
               <label class="control-label"  for="first_name">First Name: </label>
               <div class="controls">
-                <input type="text" name="first_name" value="" class="input-xlarge">
+                <input type="text" name="first_name" value="{{ request.session.first_name }}" class="input-xlarge">
               </div>
             </div>
             <div class="control-group">
               <label class="control-label"  for="last_name">Last Name: </label>
               <div class="controls">
-                <input type="text" name="last_name" value="" class="input-xlarge">
+                <input type="text" name="last_name" value="{{ request.session.last_name }}" class="input-xlarge">
               </div>
             </div>
             <div class="control-group">
               <!-- E-mail -->
               <label class="control-label" for="email">E-mail:</label>
               <div class="controls">
-                <input type="text" name="email" value="" class="input-xlarge">
+                <input type="text" name="email" value="{{ request.session.email }}" class="input-xlarge">
               </div>
             </div>
             <div class="control-group">
@@ -80,7 +80,7 @@
             <div class="control-group">
               <label for="email" class="control-label">E-Mail:</label>
               <div class="controls">
-                <input type="text" name="email" class="input-xlarge">
+                <input type="text" name="email" class="input-xlarge" value="{{ request.session.login_email }}">
               </div>
             </div>
             <div class="control-group">
