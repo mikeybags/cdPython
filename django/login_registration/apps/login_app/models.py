@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib import messages
+from django.db import IntegrityError
 
 import bcrypt
 import re
@@ -10,7 +9,7 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX = re.compile(r'^[A-Za-z]+$')
 
 class UserManager(models.Manager):
-    def authenticate(self, first, last, email, password, confirm_pw):
+    def validate(self, first, last, email, password, confirm_pw):
         errors = []
         if len(first) < 2:
             errors.append("First name must be at least 2 characters.")
@@ -26,40 +25,33 @@ class UserManager(models.Manager):
             errors.append("Password must be between 8 and 20 characters")
         if password != confirm_pw:
             errors.append("Passwords do not match. Please re-confirm your password.")
-        if errors:
-            return { 'errors': errors }
-        else:
-            return errors
+        return errors
 
     def register(self, first, last, email, password):
         errors = []
         try:
-            user = User.objects.get(email = email)
-            errors.append("E-mail already exists. Please log in or try another e-mail address.")
-            return { 'errors': errors }
-        except ObjectDoesNotExist:
-            user = 0
-        pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
-        user = User.objects.create(first_name = first, last_name = last, email = email, pw_hash = pw_hash)
-        return {'user': user}
+            hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+            User.objects.create(first_name = first, last_name = last, email = email, pw_hash = hashed)
+        except IntegrityError:
+            errors.append('E-mail already exists. Please log in or try another e-mail address.')
+        return errors
 
-    def login(self, email, password):
+    def authenticate(self, email, password):
         errors = []
         try:
             user = User.objects.get(email = email)
         except:
             errors.append("E-Mail does not exist. Please register!")
             return { 'errors': errors }
-        if user:
-            if bcrypt.hashpw(password.encode(), user.pw_hash.encode()) == user.pw_hash:
-                return {'user': user}
-            errors.append("Password is incorrect. Please re-enter your password.")
-            return {'errors': errors}
+        if bcrypt.hashpw(password.encode(), user.pw_hash.encode()) == user.pw_hash:
+            return { 'user': user }
+        errors.append("Password is incorrect. Please re-enter your password.")
+        return { 'errors': errors }
 
 class User(models.Model):
     first_name = models.CharField(max_length = 50)
     last_name = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 50, unique = True)
-    pw_hash = models.CharField(max_length = 20)
+    pw_hash = models.CharField(max_length = 256)
 
     objects = UserManager()

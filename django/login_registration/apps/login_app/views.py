@@ -13,31 +13,32 @@ def register(request):
         email = request.POST['email']
         password = request.POST['password']
         confirm_pw = request.POST['confirm_pw']
-        user = User.objects.authenticate(first_name, last_name, email, password, confirm_pw)
-        if not user:
-            user = User.objects.register(first_name, last_name, email, password)
-            if 'errors' in user:
-                for error in user['errors']:
-                    messages.error(request, error)
+        errors = []
+        errors += User.objects.validate(first_name, last_name, email, password, confirm_pw)
+        if not errors:
+            errors = User.objects.register(first_name, last_name, email, password)
+            if not errors:
+                request.session['first_name'] = first_name
+                return redirect('/success')
+            for error in errors:
+                messages.error(request, error)
                 return redirect('/')
-            request.session['first_name'] = first_name
-            return redirect('/success')
-        for error in user['errors']:
+        for error in errors:
             messages.error(request, error)
-        return redirect('/')
     return redirect('/')
 
 def login(request):
     if request.method == "POST":
         email = request.POST['email']
         password = request.POST['password']
-        login = User.objects.login(email, password)
+        login = User.objects.authenticate(email, password)
         if 'errors' in login:
             for error in login['errors']:
                 messages.error(request, error)
-                return redirect('/')
+            return redirect('/')
         request.session['first_name'] = login['user'].first_name
-    return redirect('/success')
+        return redirect('/success')
+    return redirect('/')
 
 def logout(request):
     request.session.clear()
