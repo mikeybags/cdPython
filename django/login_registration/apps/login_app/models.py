@@ -34,8 +34,9 @@ class UserManager(models.Manager):
             User.objects.create(first_name = first, last_name = last, email = email, pw_hash = hashed)
         except IntegrityError:
             errors.append('E-mail already exists. Please log in or try another e-mail address.')
-        return errors
-
+            return {'errors': errors}
+        return {'user': user}
+        
     def authenticate(self, email, password):
         errors = []
         try:

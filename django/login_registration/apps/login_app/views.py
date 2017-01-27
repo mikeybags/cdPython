@@ -18,15 +18,17 @@ def register(request):
         request.session['email'] = email
         errors = []
         errors += User.objects.validate(first_name, last_name, email, password, confirm_pw)
-        if not errors:
-            errors = User.objects.register(first_name, last_name, email, password)
-            if not errors:
-                return redirect('/success')
+        if errors:
             for error in errors:
                 messages.error(request, error)
-                return redirect('/')
-        for error in errors:
-            messages.error(request, error)
+        else:
+            registration = User.objects.register(first_name, last_name, email, password)
+            if 'errors' in registration:
+                for error in registration['errors']:
+                    messages.error(request, error)
+            if 'user' in registration:
+                request.session['id'] = registration['user'].id
+                return redirect('/success')
     return redirect('/')
 
 def login(request):
