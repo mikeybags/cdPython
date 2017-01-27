@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static 'books_app/bootstrap.min.css' %}">
+  <title>Books Home</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <h2>Welcome, {{ request.session.alias }}</h2>
+      </div>
+      <div class="text-right col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div>&nbsp;</div>
+        <a href="{% url 'books:add' %}">Add Book and Review</a><span>&nbsp;</span><span>&nbsp;</span><a href="{% url 'login:logout' %}">Logout</a>
+      </div>
+    </div><!-- end well -->
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+      <h3>Recent Book Reviews:</h3>
+      {% for review in reviews %}
+      <h4><a href="{% url 'books:book' id=review.book.id %}">{{ review.book.title }}</a></h4>
+      <p>Rating: {{ review.rating }} stars<p>
+      <p><a href="{% url 'books:user_profile' id=review.user.id %}">{{ review.user.alias }}</a> says: {{ review.review }}</p>
+      <p>Posted on {{ review.created_at }}
+      {% if review.user.id == request.session.id %}
+        <a class="pull-right" href="{% url 'books:delete_review' id=review.id %}">Delete this Review</a>
+      {% endif %}
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      {% endfor %}
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+      <div class="panel panel-title">
+        <h4>Other Books with Reviews:</h4>
+      </div>
+      {% for book in books %}
+        <p><a href="{% url 'books:book' id=book.id %}">{{ book.title }}</a></p>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
